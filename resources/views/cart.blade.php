@@ -50,19 +50,20 @@
                     </div>
                     <div class="cart-table-row-right">
                         <div class="cart-table-actions">
-                            <!-- <a href="#">Remove</a> <br> -->
+
                             <form action="{{ route('cart.destroy', $item->rowId) }}" method="post">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
-                                <button type="submit" class="cart-options">Remove</button>
+                                <button type="submit" class="cart-options" title="Eliminar Producto">Remove</button>
                             </form>
-                            <!-- <a href="#">Save for Later</a> -->
-                            <form action="{{ route('cart.GuardarParaDespues', $item->rowId) }}" method="post">
+
+                            <form action="{{ route('cart.switchToSaveForLater', $item->rowId) }}" method="post">
                                 {{ csrf_field() }}
 
                                 <button type="submit" class="cart-options">Guardar para Después</button>
                             </form>
+
                         </div>
                         <div>
                             <select class="quantity">
@@ -90,13 +91,13 @@
                 <div class="cart-totals-right">
                     <div>
                         Subtotal <br>
-                        IGV <br>
+                        IGV (18%)<br>
                         <span class="cart-totals-total">Total</span>
                     </div>
                     <div class="cart-totals-subtotal">
-                        {{ Cart::subtotal() }} <br>
-                        {{ Cart::tax() }} <br>
-                        <span class="cart-totals-total">S/. {{ Cart::total() }}</span>
+                        {{ presentPrice(Cart::subtotal()) }} <br>
+                        {{ presentPrice(Cart::tax()) }} <br>
+                        <span class="cart-totals-total">{{presentPrice(Cart::total())  }}</span>
                     </div>
                 </div>
             </div> <!-- end cart-totals -->
@@ -131,9 +132,18 @@
                         </div>
                         <div class="cart-table-row-right">
                             <div class="cart-table-actions">
-                                <a href="#">Remove</a> <br>
+                                <form action="{{ route('saveForLater.destroy', $item->rowId) }}" method="post">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
 
-                                <a href="#">Move to cart</a>
+                                    <button type="submit" class="cart-options" title="Eliminar Producto">Remove</button>
+                                </form>
+
+                                <form action="{{ route('saveForLater.switchToCart', $item->rowId) }}" method="post">
+                                    {{ csrf_field() }}
+
+                                    <button type="submit" class="cart-options">Move to Cart</button>
+                                </form>
                             </div>
                             {{-- <div>
                                 <select class="quantity">
