@@ -7,7 +7,7 @@ function presentPrice($price)
     // return number_format('$%i', $price / 100);
 
     if ($price<0) return "-".presentPrice(-$price);
-  return 'S/. ' . number_format($price, 2);
+  return '$' . number_format($price, 2);
 }
 
 // function presentPrice($price, $curr = 'PEN')
